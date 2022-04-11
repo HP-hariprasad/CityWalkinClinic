@@ -12,14 +12,14 @@ class PatientModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(30))
     lastname = db.Column(db.String(30))
-    dob = db.Column(db.DateTime())
+    dob = db.Column(db.String(30))
     medical_history = db.Column(db.String(100))
     email = db.Column(db.String(30), unique=True)
     contact = db.Column(db.String(30), unique=True)
     address = db.Column(db.String(100))
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    user = db.relationship('UserModel', on_delete= db.Model.CASCADE)
+    user = db.relationship('UserModel')
 
     appointments = db.relationship('AppointmentModel')
     prescriptions = db.relationship('PrescriptionModel')
@@ -47,6 +47,9 @@ class PatientModel(db.Model):
         self.contact = contact
         self.address = address
         self.user_id = user_id
+
+    def json(self):
+        return {'firstname':self.firstname, 'lastname':self.lastname}
 
     def save_to_db(self):
         db.session.add(self)

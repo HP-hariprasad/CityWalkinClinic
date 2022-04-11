@@ -4,8 +4,6 @@ class FeedbackModel(db.Model):
     __tablename__ = 'feedbacks'
 
     id = db.Column(db.Integer, primary_key=True)
-    # patient_id = db.Column(db.Integer, db.ForeignKey('patient-model.id'))
-    # doctor_id = db.Column(db.Integer, db.ForeignKey('doctor-model.id'))
     feedback_summary = db.Column(db.String(100))
 
     patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'))
@@ -28,13 +26,13 @@ class FeedbackModel(db.Model):
         db.session.commit()
 
     @classmethod
-    def find_by_username(cls, username):
-        return cls.query.filter_by(username=username).first()
+    def find_by_patient(cls, patient_id):
+        return cls.query.filter_by(patient_id=patient_id).first()
 
     @classmethod
     def find_by_id(cls, _id):
         return cls.query.filter_by(id=_id).first()
 
     @classmethod
-    def find_by_roles(cls, role):
-        return cls.query.filter_by(role=role).first()
+    def find_by_doctor(cls, doctor_id):
+        return cls.query.filter_by(doctor_id=doctor_id).first()

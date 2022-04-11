@@ -14,6 +14,11 @@ class UserRegister(Resource):
                         required=True,
                         help='this field cannot be empty'
                         )
+    parser.add_argument('role',
+                        type=str,
+                        required=True,
+                        help='this field cannot be empty'
+                        )
 
     def post(self):
         data = UserRegister.parser.parse_args()

@@ -5,9 +5,9 @@ class AppointmentModel(db.Model):
     __tablename__ = 'appointments'
 
     appointment_id = db.Column(db.Integer, primary_key=True)
-    appointment_time_slot = db.Column(db.DateTime())
+    appointment_time_slot = db.Column(db.String(100))
     consultation_reason = db.Column(db.String(50))
-    consultation_fees = db.Column(db.String(10))
+    consultation_fees = db.Column(db.Integer)
 
     patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'))
     patient = db.relationship('PatientModel')
@@ -34,13 +34,13 @@ class AppointmentModel(db.Model):
         db.session.commit()
 
     @classmethod
-    def find_by_username(cls, username):
-        return cls.query.filter_by(username=username).first()
+    def find_by_patient_id(cls, patient_id):
+        return cls.query.filter_by(patient_id=patient_id).first()
 
     @classmethod
     def find_by_id(cls, _id):
         return cls.query.filter_by(id=_id).first()
 
     @classmethod
-    def find_by_roles(cls, role):
-        return cls.query.filter_by(role=role).first()
+    def find_by_doctor_id(cls, doctor_id):
+        return cls.query.filter_by(role=doctor_id).first()

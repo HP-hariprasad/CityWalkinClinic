@@ -40,6 +40,11 @@ class PatientRegister(Resource):
                         required=True,
                         help='this field cannot be empty'
                         )
+    parser.add_argument('user_id',
+                        type=int,
+                        required=True,
+                        help='this field cannot be empty'
+                        )
 
     def get(self, firstname):
         patient = PatientModel.find_by_patient_firstname(firstname)
@@ -60,3 +65,11 @@ class PatientRegister(Resource):
         #     return {'message': "An error ocurred while adding an item"}, 500
 
         return {"message": "User Created successfully"}, 201
+
+
+class Patients(Resource):
+    def get(self, firstname):
+        patient = PatientModel.find_by_patient_firstname(firstname)
+        if patient:
+            return patient.json()
+        return {'message': 'Patient with the given name not found'}, 404
